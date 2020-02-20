@@ -1,0 +1,2 @@
+# magaz
+Test project magaz
