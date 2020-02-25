@@ -6,3 +6,29 @@ services:
         working_dir: /app
         volumes:
             - ./:/app
+    nginx:
+        image: nginx:alpine
+        container_name: magaz-nginx
+        working_dir: /app
+        volumes:
+            - ./:/app
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - ./docker/log/nginx:/var/log/nginx
+        ports:
+            - "80:80"
+            - "8080:8080"
+            - "443:443"
+
+    mysql:
+        image: mysql:5.7
+        command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
+        container_name: magaz-mysql
+        working_dir: /app
+        volumes:
+            - ./:/app
+            - ./docker/mysql:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=magaz
+        ports:
+            - "3306:3306"
