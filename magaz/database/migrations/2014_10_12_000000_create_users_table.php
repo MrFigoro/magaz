@@ -24,10 +24,9 @@ class CreateUsersTable extends Migration
             $table->boolean('activity')->default(true)->nullable();
             $table->binary('photo')->nullable();
             $table->timestamp('deleted_at')->nullable();
-
-//            $table->rememberToken();
-//            $table->timestamp('email_verified_at')->nullable();
-//            $table->timestamps();
+            $table->rememberToken();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamps();
         });
     }
 
