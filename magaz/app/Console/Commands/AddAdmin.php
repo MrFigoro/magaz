@@ -12,7 +12,7 @@ class AddAdmin extends Command
      *
      * @var string
      */
-    protected $signature = 'add:admin';
+    protected $signature = 'add:admin {email : Add email} {phone} {password} {firstname}';
 
     /**
      * The console command description.
@@ -38,15 +38,11 @@ class AddAdmin extends Command
      */
     public function handle()
     {
-        $email = $this->ask('What is your email?');
-        $phone = $this->ask('What is your phone?');
-        $password = $this->secret('What is your password?');
-        $firstname = $this->ask('What is your firstname?');
         $user = new User();
-        $user->email = $email;
-        $user->phone = $phone;
-        $user->password = $password;
-        $user->firstname = $firstname;
+        $user->email = $this->argument('email');
+        $user->phone = $this->argument('phone');
+        $user->password = $this->argument('password');
+        $user->firstname = $this->argument('firstname');
         $user->role = 'admin';
         $user->save();
         $this->info('admin created');
