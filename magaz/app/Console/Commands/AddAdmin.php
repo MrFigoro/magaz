@@ -41,11 +41,11 @@ class AddAdmin extends Command
     public function handle()
     {
         $user = new User();
-        $email = $this->argument('email');
-        $phone = $this->argument('phone');
-        $password = $this->argument('password');
-        $firstname = $this->argument('firstname');
         $validator = Validator::make([
+            $email = $this->argument('email'),
+            $phone = $this->argument('phone'),
+            $password = $this->argument('password'),
+            $firstname = $this->argument('firstname'),
             'firstname' => $firstname,
             'phone' => $phone,
             'email' => $email,
@@ -56,12 +56,6 @@ class AddAdmin extends Command
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'string', 'min:5'],
         ]);
-
-        $user->email = $email;
-        $user->phone = $phone;
-        $user->password = $password;
-        $user->firstname = $firstname;
-        $user->role = 'admin';
         if ($validator->fails()) {
             $this->info('Admin not created. See error messages below:');
 
