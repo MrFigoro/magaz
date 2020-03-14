@@ -46,6 +46,7 @@ class AddAdmin extends Command
             $phone = $this->argument('phone'),
             $password = $this->argument('password'),
             $firstname = $this->argument('firstname'),
+            $user->role = 'admin',
             'firstname' => $firstname,
             'phone' => $phone,
             'email' => $email,
