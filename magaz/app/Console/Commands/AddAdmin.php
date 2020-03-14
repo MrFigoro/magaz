@@ -23,17 +23,7 @@ class AddAdmin extends Command
      */
     protected $description = 'Add admin data to the table "users"';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
+     /**
      * Execute the console command.
      *
      * @return mixed
@@ -41,22 +31,23 @@ class AddAdmin extends Command
     public function handle()
     {
         $user = new User();
+        $user->email = $this->argument('email');
+        $user->phone = $this->argument('phone');
+        $user->password = $this->argument('password');
+        $user->firstname = $this->argument('firstname');
+
         $validator = Validator::make([
-            $email = $this->argument('email'),
-            $phone = $this->argument('phone'),
-            $password = $this->argument('password'),
-            $firstname = $this->argument('firstname'),
-            $user->role = 'admin',
-            'firstname' => $firstname,
-            'phone' => $phone,
-            'email' => $email,
-            'password' => $password,
+            'firstname' => $user->firstname,
+            'phone' => $user->phone,
+            'email' => $user->email,
+            'password' => $user->password,
         ], [
             'firstname' => ['required'],
             'phone' => ['required', 'string', 'unique:users', 'max:20'],
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'string', 'min:5'],
         ]);
+
         if ($validator->fails()) {
             $this->info('Admin not created. See error messages below:');
 
@@ -65,14 +56,12 @@ class AddAdmin extends Command
             }
             return 1;
         } else {
-            $user->email = $email;
-            $user->phone = $phone;
-            $user->password = $password;
-            $user->firstname = $firstname;
+
             $user->role = 'admin';
             $user->save();
-            $this->info('admin created');
+            $this->info('Admin successfully created');
         }
+
         $validator->errors()->all();
     }
 }
